@@ -23,7 +23,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\Continents.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="DataBaseShcema\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\Continents.tsx" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
