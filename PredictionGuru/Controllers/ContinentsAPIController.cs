@@ -25,24 +25,46 @@ namespace PredictionGuru.Controllers
         }
 
         [HttpPost("[action]")]
-        public List<Continent> SaveContinent()
+        public List<Continent> SaveContinent(int id, string name)
         {
-            var body = Request.Body.ReadToString();
-
-            var continent = body.FromJson<Continent>();
-
-            if (continent.Name.IsEmpty())
+            name = name.SafeValue();
+            if (name.IsEmpty())
             {
                 throw new Exception("Name is invalid.");
             }
 
-            var obj = _context.Continent.SingleOrDefault(c => c.Name.Trim().ToLower() == continent.Name.Trim().ToLower());
+            Continent obj = null;
+            if(id > 0)
+            {
+                obj = _context.Continent.SingleOrDefault(c => c.Id == id);
+            }
             if(obj == null)
             {
                 obj = new Continent();
                 _context.Continent.Add(obj);
             }
-            obj.Name = continent.Name;
+            obj.Name = name;
+
+            _context.SaveChanges();
+
+            return _context.Continent.ToList();
+        }
+
+        [HttpPost("[action]")]
+        public List<Continent> DeleteContinent(int id)
+        {
+            if (id < 1)
+            {
+                throw new Exception("Id is invalid.");
+            }
+
+            var obj = _context.Continent.SingleOrDefault(c => c.Id == id);
+            if (obj == null)
+            {
+                throw new Exception("Id is invalid.");
+            }
+
+            _context.Continent.Remove(obj);
 
             _context.SaveChanges();
 
