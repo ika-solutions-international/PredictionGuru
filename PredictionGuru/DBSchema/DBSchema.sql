@@ -1,0 +1,159 @@
+﻿DROP DATABASE PredictionGuru
+GO
+
+CREATE DATABASE PredictionGuru
+GO
+
+USE PredictionGuru
+GO
+
+CREATE TABLE Continent(
+	Id INT IDENTITY(1,1) NOT NULL,
+	Name VARCHAR(max) NOT NULL,
+	CONSTRAINT PK_Continent PRIMARY KEY (Id)
+) 
+GO
+
+CREATE TABLE Country(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[ContinentId] int NOT NULL,
+	[Name] VARCHAR(MAX) NOT NULL,
+	CONSTRAINT PK_Country PRIMARY KEY(Id),
+	CONSTRAINT FK_Country_Continent FOREIGN KEY(ContinentId) REFERENCES Continent(Id)
+)	
+
+
+CREATE TABLE TeamType(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[Name] VARCHAR(MAX) NOT NULL,
+	CONSTRAINT PK_TeamType PRIMARY KEY(Id) 
+)
+GO
+
+CREATE TABLE Team(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[CountryId] INT NOT NULL,
+	[TypeId] INT NOT NULL,
+	[Name] VARCHAR(MAX) NOT NULL,
+	[Picture] VARCHAR(MAX) NULL,
+	CONSTRAINT PK_Team PRIMARY KEY(Id),
+	CONSTRAINT FK_Team_Country FOREIGN KEY(CountryId) REFERENCES Country(Id),
+	CONSTRAINT FK_Team_TeamType FOREIGN KEY(TypeId) REFERENCES TeamType(Id)
+)
+GO
+
+CREATE TABLE PlayerType(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[Name] VARCHAR(MAX) NOT NULL,
+	CONSTRAINT PK_PlayerType PRIMARY KEY(Id)
+)
+GO
+
+CREATE TABLE PlayerProfile(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[CountryId] INT NOT NULL,
+	[Name] VARCHAR(MAX) NOT NULL,
+	CONSTRAINT PK_PlayerProfile PRIMARY KEY(Id),
+	CONSTRAINT FK_PlayerProfile_Country FOREIGN KEY(CountryId) REFERENCES Country(Id)
+)
+
+
+CREATE TABLE PlayerForTeam(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[TeamId] INT NOT NULL,
+	[PlayerId] INT NOT NULL,
+	[PlayerTypeId] INT NOT NULL,
+	[JerseyNumber] VARCHAR(MAX) NULL,
+	[Picture] VARCHAR(MAX) NULL,
+	CONSTRAINT PK_PlayerForTeam PRIMARY KEY(Id),
+	CONSTRAINT FK_PlayerForTeam_Team FOREIGN KEY(TeamId) REFERENCES Team(Id),
+	CONSTRAINT FK_PlayerForTeam_PlayerProfile FOREIGN KEY(PlayerId) REFERENCES  PlayerProfile(Id),
+	CONSTRAINT FK_PlayerForTeam_PlayerType FOREIGN KEY(PlayerTypeId) REFERENCES PlayerType(Id)
+)
+GO
+
+CREATE TABLE Ground(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[CountryId] INT NOT NULL,
+	[Name] VARCHAR(MAX) NOT NULL,
+	[Picture] VARCHAR(MAX) NULL,
+	CONSTRAINT PK_Ground PRIMARY KEY(Id),
+	CONSTRAINT FK_Ground_Country FOREIGN KEY(CountryId) REFERENCES Country(Id)
+)
+GO
+
+CREATE TABLE [Match](
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[GroundId] INT NOT NULL,
+	[HomeTeamId] INT NOT NULL,
+	[AwayTeamId] INT NOT NULL,
+	[StartUtcDate] DATETIME NOT NULL,
+	[EndUtcDate] DATETIME NOT NULL,
+	CONSTRAINT PK_Match PRIMARY KEY(Id),
+	CONSTRAINT FK_Match_Ground FOREIGN KEY(GroundId) REFERENCES Ground(Id),
+	CONSTRAINT FK_Match_Team_Home FOREIGN KEY(HomeTeamId) REFERENCES Team(Id),
+	CONSTRAINT FK_Match_Team_Away FOREIGN KEY(AwayTeamId) REFERENCES Team(Id)
+)
+GO
+
+
+
+CREATE TABLE MatchResult(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[MatchId] INT NOT NULL,
+	[WinningTeamId] INT NULL,
+	[LosingTeamId] INT NULL,
+	[IsDrawn] BIT NOT NULL,
+	[MOMPlayerId] INT NOT NULL,
+	CONSTRAINT PK_MatchResult PRIMARY KEY(Id),
+	CONSTRAINT FK_MatchResult_Match FOREIGN KEY(MatchId) REFERENCES [Match](Id),
+	CONSTRAINT FK_MatchResult_Team_Winning FOREIGN KEY(WinningTeamId) REFERENCES Team(Id),
+	CONSTRAINT FK_MatchResult_Team_Losing FOREIGN KEY(LosingTeamId) REFERENCES Team([Id]),
+	CONSTRAINT FK_MatchResult_PlayerProfile FOREIGN KEY(MOMPlayerId) REFERENCES PlayerProfile(Id)
+)
+GO
+
+
+CREATE TABLE MatchScoreCard(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[MatchId] INT NOT NULL,
+	[PlayerId] INT NOT NULL,
+	[TeamId] INT NOT NULL,
+	[ScoreUtcTime] DATETIME NOT NULL,
+	CONSTRAINT PK_MatchScoreCard PRIMARY KEY(Id),
+	CONSTRAINT FK_MatchScoreCard_Match FOREIGN KEY(MatchId) REFERENCES [Match](Id),
+	CONSTRAINT FK_MatchScoreCard_PlayerProfile FOREIGN KEY(PlayerId) REFERENCES PlayerProfile(Id),
+	CONSTRAINT FK_MatchScoreCard_Team FOREIGN KEY(TeamId) REFERENCES Team(Id)
+)
+GO
+
+CREATE TABLE UserProfile(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[Email] VARCHAR(MAX) NOT NULL,
+	[Password] VARCHAR(MAX) NOT NULL,
+	[PasswordSalt] VARCHAR(MAX) NOT NULL,
+	[FirstName] VARCHAR(MAX) NULL,
+	[LastName] VARCHAR(MAX) NULL,
+	[JoinUtcDate] DATETIME NOT NULL,
+	[Gender] VARCHAR(MAX) NULL,
+	CONSTRAINT PK_UserProfile PRIMARY KEY(Id) 
+)
+GO
+
+
+CREATE TABLE MatchResultPrediction(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[MatchId] INT NOT NULL,
+	[WinningTeamId] INT NULL,
+	[LosingTeamId] INT NULL,
+	[IsDrawn] BIT NOT NULL,
+	[PredictorUserId] INT NOT NULL,
+	CONSTRAINT PK_MatchResultPrediction PRIMARY KEY(Id),
+	CONSTRAINT FK_MatchResultPrediction_Match FOREIGN KEY(MatchId) REFERENCES [Match](Id),
+	CONSTRAINT FK_MatchResultPrediction_Team_Winning FOREIGN KEY(WinningTeamId) REFERENCES Team(Id),
+	CONSTRAINT FK_MatchResultPrediction_Team_Losing FOREIGN KEY(LosingTeamId) REFERENCES Team(Id),
+	CONSTRAINT FK_MatchResultPrediction_UserProfile FOREIGN KEY(PredictorUserId) REFERENCES UserProfile(Id)
+)
+
+
+

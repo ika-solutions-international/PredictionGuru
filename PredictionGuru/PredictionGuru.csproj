@@ -31,6 +31,10 @@
     <TypeScriptCompile Include="ClientApp\components\Continents.tsx" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DBSchema\" />
+  </ItemGroup>
+
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
