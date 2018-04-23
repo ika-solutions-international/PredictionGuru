@@ -14,7 +14,7 @@ export default class App extends React.Component {
             <View style={styles.bottomSection}>
                 <Text style={styles.footerTex}>Buttons will appear here</Text>
             </View>
-      </View>
+        </View>
     );
   }
 }
