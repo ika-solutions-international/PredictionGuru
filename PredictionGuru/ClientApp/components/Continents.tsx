@@ -49,6 +49,7 @@ export class ContinentsData extends React.Component<RouteComponentProps<{}>, Con
         data.append("id", this.state.continentId);
         data.append("name", this.state.continentName);
 
+
         fetch('api/ContinentsAPI/SaveContinent', {
             method: "POST",
             body: data
@@ -56,7 +57,6 @@ export class ContinentsData extends React.Component<RouteComponentProps<{}>, Con
         .then(response => response.json() as Promise<Continent[]>)
         .then(data => {
             this.setState({ continents: data, loading: false, continentId: "0", continentName: "" });
-
             $("#winAddNewContinent").modal("hide");
         });
 
@@ -69,7 +69,8 @@ export class ContinentsData extends React.Component<RouteComponentProps<{}>, Con
             continentName: $(event.currentTarget).attr("data-name") as string
         },
         () => {
-            $("#winAddNewContinent").modal("show");
+            $("#winAddNewContinent").
+                ("show");
         });
     }
 

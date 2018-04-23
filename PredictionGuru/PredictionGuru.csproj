@@ -25,10 +25,16 @@
 
   <ItemGroup>
     <None Remove="ClientApp\components\Continents.tsx" />
+    <None Remove="ClientApp\components\Models.ts" />
+    <None Remove="ClientApp\components\TeamType.tsx" />
+    <None Remove="ClientApp\components\TeamType\Details.tsx" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\Continents.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Models\Models.ts" />
+    <TypeScriptCompile Include="ClientApp\components\TeamType\Details.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\TeamType\TeamType.tsx" />
   </ItemGroup>
 
   <ItemGroup>
