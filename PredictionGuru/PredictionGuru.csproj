@@ -25,11 +25,13 @@
 
   <ItemGroup>
     <None Remove="ClientApp\components\Continents.tsx" />
+    <None Remove="ClientApp\components\RouteComponentValues.tsx" />
     <None Remove="ClientApp\components\TypedPropsComponentTest.tsx" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\Continents.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\RouteComponentValues.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TypedPropsComponentTest.tsx" />
   </ItemGroup>
 
