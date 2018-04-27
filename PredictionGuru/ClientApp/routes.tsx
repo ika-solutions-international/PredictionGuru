@@ -12,5 +12,5 @@ export const routes = <Layout>
     <Route path='/counter' component={ Counter } />
     <Route path='/fetchdata' component={ FetchData } />
     <Route path='/api/continents' component={ContinentsData} />
-    <Route path='/api/RouteComponentValues/:id' component={RouteComponentValues} />
+    <Route path='/api/RouteComponentValues/:id' component={RouteComponentValues as any} />
 </Layout>;
