@@ -12,6 +12,7 @@ interface DetailsProps {
 }
 
 export class Details extends React.Component<any, DetailsState>{
+
     constructor(props : any) {
         super(props);
         //this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this)
