@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 
 namespace PredictionGuru.Models
 {
@@ -10,6 +13,10 @@ namespace PredictionGuru.Models
             Team = new HashSet<Team>();
         }
 
+        [Key, Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
+        [DisplayName("Id")]
         public int Id { get; set; }
         public string Name { get; set; }
 

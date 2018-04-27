@@ -11,11 +11,10 @@ interface DetailsProps {
     id: number
 }
 
-export class Details extends React.Component<any, DetailsState>{
+export class Details extends React.Component<DetailsProps, DetailsState>{
 
-    constructor(props : any) {
+    constructor(props: DetailsProps) {
         super(props);
-        //this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this)
         this.state = { teamType: new Models.TeamType(), loading: true };
         fetch('./api/TeamTypes/' + this.props.id)
             .then(response => response.json() as Promise<Models.TeamType>)
@@ -24,9 +23,6 @@ export class Details extends React.Component<any, DetailsState>{
             })
     }
 
-    //loadCommentsFromServer(props) {
-    //    console.log(props);
-    //}
 
     public render() {
         let contents = this.state.loading

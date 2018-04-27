@@ -46,7 +46,11 @@ export class CreateEdit extends React.Component<CreateEditProps, CreateEditState
             })
             .then(data => {
                 this.setState({ save: false });
-                this.props.onSave(true);
+                fetch('./api/TeamTypes')
+                    .then(response => response.json() as Promise<Models.TeamType[]>)
+                    .then(updatedData => {
+                        this.props.onSave(true, updatedData);
+                    })
             });
     }
 

@@ -107,9 +107,9 @@ export class TeamTypes extends React.Component<RouteComponentProps<{}>, TeamType
         this.setState({ showDetails: false, showCreate: false, showEdit: false });
     }
 
-    handlePopupSave(success: boolean) {
+    handlePopupSave(success: boolean, updateData: any) {
         if (success)
-            this.setState({ showCreate: false, showEdit: false });
+            this.setState({ showCreate: false, showEdit: false, teamTypes : updateData });
     }
 
     renderTable(teamTypes: Model.TeamType[]) {
