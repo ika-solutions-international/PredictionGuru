@@ -34,7 +34,7 @@ export class ContinentsData extends React.Component<RouteComponentProps<{}>, Con
             continentName: ""
         },
         () => {
-            $("#winAddNewContinent").modal("show");
+            $("#winAddNewContinent").modal("show"); 
         });
     }
 
@@ -68,9 +68,8 @@ export class ContinentsData extends React.Component<RouteComponentProps<{}>, Con
             continentId: $(event.currentTarget).attr("data-id") as string,
             continentName: $(event.currentTarget).attr("data-name") as string
         },
-        () => {
-            $("#winAddNewContinent").
-                ("show");
+            () => {
+                $("#winAddNewContinent").modal("show");
         });
     }
 

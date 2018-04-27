@@ -4,9 +4,9 @@ import * as Model from '../Models/Models';
 //import { render } from 'react-dom';
 
 import * as Modal from 'react-modal';
-//import { CreateEdit } from './CreateEdit';
+import { CreateEdit } from './CreateEdit';
 import { Details } from './Details';
-import { Props } from 'react-modal';
+//import { Props } from 'react-modal';
 
 
 interface TeamTypeState {
@@ -37,7 +37,7 @@ export class TeamTypes extends React.Component<RouteComponentProps<{}>, TeamType
     }
 
     handleCreate() {
-        this.setState({ showCreate: true, showDetails: false, showEdit: false })
+        this.setState({ showCreate: true, showDetails: false, showEdit: false, activeId: 0 })
     }
 
     handleEdit(id: number) {
@@ -90,14 +90,13 @@ export class TeamTypes extends React.Component<RouteComponentProps<{}>, TeamType
 
     private renderPopupContent() {
         if (this.state.showCreate) {
-            //return <CreateEdit id={null} dbaction="create"
-            //    onSave={this.handlePopupSave.bind(this)} />
-            return ""
+            return <CreateEdit id={this.state.activeId} dbaction="create"
+                onSave={this.handlePopupSave.bind(this)} />
+            
         }
         if (this.state.showEdit) {
-            //return <CreateEdit id={this.state.activeId} dbaction="edit"
-            //    onSave={this.handlePopupSave.bind(this)} />
-            return ""
+            return <CreateEdit id={this.state.activeId} dbaction="edit"
+                onSave={this.handlePopupSave.bind(this)} />
         }
         if (this.state.showDetails) {
             return <Details id={this.state.activeId} />
